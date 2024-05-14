@@ -5,9 +5,11 @@ use wasm_bindgen::prelude::*;
 extern "C" {
     pub type Auth;
 
+    // this is for compat
     #[wasm_bindgen(method, js_name = auth)]
     pub fn auth(_: &FirebaseApp) -> Auth;
 
+    // this is for the new version of
     #[wasm_bindgen(method, js_name = onAuthStateChanged)]
     pub fn on_auth_state_changed(this: &Auth, callback: &Closure<dyn FnMut(JsValue)>);
 
@@ -31,18 +33,24 @@ extern "C" {
     // Google Auth support
     pub type GoogleAuthProvider;
 
-    #[wasm_bindgen(constructor)]
+    #[wasm_bindgen(constructor, js_namespace = ["firebase", "auth"])]
     pub fn new() -> GoogleAuthProvider;
 
     // Github Auth support
-    pub type GithubAuthProvider;
+    pub type GitHubAuthProvider;
 
-    #[wasm_bindgen(constructor)]
-    pub fn new() -> GithubAuthProvider;
+    #[wasm_bindgen(constructor, js_namespace = ["firebase", "auth"])]
+    pub fn new() -> GitHubAuthProvider;
 
     #[wasm_bindgen(catch, method, js_name = signInWithPopup)]
-    pub async fn sign_in_with_popup(
+    pub async fn sign_in_with_popup_google(
         auth: &Auth,
-        provider: GoogleAuthProvider,
+        provider: &GoogleAuthProvider,
+    ) -> Result<JsValue, JsValue>;
+
+    #[wasm_bindgen(catch, method, js_name = signInWithPopup)]
+    pub async fn sign_in_with_popup_github(
+        auth: &Auth,
+        provider: &GitHubAuthProvider,
     ) -> Result<JsValue, JsValue>;
 }
