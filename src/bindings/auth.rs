@@ -27,6 +27,10 @@ extern "C" {
         password: String,
     ) -> Result<JsValue, JsValue>;
 
+    // There is an optional actionCodeSettings parameter that is not implemented here
+    #[wasm_bindgen(catch, method, js_name = sendPasswordResetEmail)]
+    pub async fn send_password_reset_email(this: &Auth, email: String) -> Result<JsValue, JsValue>;
+
     #[wasm_bindgen(catch, method, js_name = signOut)]
     pub async fn sign_out(this: &Auth) -> Result<JsValue, JsValue>;
 
@@ -37,10 +41,12 @@ extern "C" {
     pub fn new() -> GoogleAuthProvider;
 
     // Github Auth support
-    pub type GitHubAuthProvider;
+    // the name is incorrect in firebase so we have to use
+    // Github here and create another tpye alias for it
+    pub type GithubAuthProvider;
 
     #[wasm_bindgen(constructor, js_namespace = ["firebase", "auth"])]
-    pub fn new() -> GitHubAuthProvider;
+    pub fn new() -> GithubAuthProvider;
 
     #[wasm_bindgen(catch, method, js_name = signInWithPopup)]
     pub async fn sign_in_with_popup_google(
@@ -54,3 +60,6 @@ extern "C" {
         provider: &GitHubAuthProvider,
     ) -> Result<JsValue, JsValue>;
 }
+
+// type alias
+pub type GitHubAuthProvider = GithubAuthProvider;

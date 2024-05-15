@@ -19,8 +19,8 @@ js-sys = ">=0.3.61"
 
 [workspace]
 members = [
-    "examples/sycamore-firebase-auth",
-    "examples/leptos-firebase-auth",
-    "examples/sycamore-realtime-database",
+    # "examples/sycamore-firebase-auth",
+    # "examples/leptos-firebase-auth",
+    # "examples/sycamore-realtime-database",
 ]
 exclude = ["examples"]
