@@ -9,6 +9,12 @@ extern "C" {
     #[wasm_bindgen(method, js_name = auth)]
     pub fn auth(_: &FirebaseApp) -> Auth;
 
+    // This gets the current user
+    #[derive(Debug)]
+    pub type User;
+    #[wasm_bindgen(method, getter, js_name = currentUser)]
+    pub fn current_user(this: &Auth) -> User;
+
     // this is for the new version of
     #[wasm_bindgen(method, js_name = onAuthStateChanged)]
     pub fn on_auth_state_changed(this: &Auth, callback: &Closure<dyn FnMut(JsValue)>);
